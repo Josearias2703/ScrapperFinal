@@ -4,7 +4,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from db import MongoDriver
 
-consulta = 'Real Madrid Retro'
+
+consulta = 'manchester city primera equipacion'
 
 driver = webdriver.Chrome()
 driver.get("https://www.camisetasfutboleses.com/")
@@ -28,13 +29,11 @@ for card in camiseta:
         precioof = card.find_element(By.CSS_SELECTOR, "div > div > div.product-details > div.caption > p.price > span.price-new").text
         descuento = card.find_element(By.CSS_SELECTOR, "div > div > div.product-details > div.caption > p.price > span.percentsaving").text
         precion = card.find_element(By.CSS_SELECTOR,"div > div > div.product-details > div.caption > p.price > span.price-old").text
-        # Tu código para procesar otros elementos aquí
 
         print(nombre)
         print(precioof)
         print(descuento)
         print(precion)
-        # Imprime otros datos aquí
 
         Camiseta = {
             "Nombre": nombre,
@@ -42,12 +41,11 @@ for card in camiseta:
                 "Precio Oferta": precioof,
                 "Descuento": descuento,
                 "Precio Normal": precion,
-                # Agrega otros datos aquí
             }
 
         }
 
-        mongodb.insert_record(record=Camiseta, username="Camisetas Real Madrid")
+        mongodb.insert_record(record=Camiseta, username="Camisetas Manchester City")
 
         print("++++++++++++++++++++++++++++++++")
     except Exception as e:

@@ -2,7 +2,9 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from dotenv import load_dotenv
 import os
+import certifi
 
+ca = certifi.where()
 load_dotenv()
 
 class MongoDriver:
@@ -11,12 +13,10 @@ class MongoDriver:
         user = os.getenv('MONGO_USER')
         password = os.getenv('MONGO_PASSWORD')
         hostname = os.getenv('MONGO_HOSTNAME')
-        uri = f"mongodb+srv://{os.getenv('MONGO_USER')}:{password}@{hostname}/?retryWrites=true&w=majority"
-        self.client = MongoClient(uri, server_api=ServerApi('1'))
-        # Create a new client and connect to the server
-        # Send a ping to confirm a successful connection
+        uri = f"mongodb+srv://{user}:{password}@{hostname}/?retryWrites=true&w=majority"
+        self.client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=ca)
     def insert_record(self, record: dict, username: str):
-        self.client.get_database('db_examenf').get_collection(f'{username}camisetas').insert_one(record)
+        self.client.get_database('db_examenf').get_collection(f'{username} camisetas').insert_one(record)
 
     def test_connection(self):
         try:
